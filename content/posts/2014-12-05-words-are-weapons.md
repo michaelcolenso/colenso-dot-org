@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 title: boom. roasted.
 tags: 
   - meta
