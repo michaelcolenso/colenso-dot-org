@@ -1,6 +1,6 @@
 ---
 published: false
-title: Overhaul of Page Generation
+title: boom. roasted.
 tags: 
   - meta
   - web
@@ -8,6 +8,7 @@ tags:
 
 Here are some fancy words.
 
+### here's a thought. maybe something original.
 <!--more-->
 
 bunch more words and shit bro
