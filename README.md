@@ -1,11 +1,6 @@
-
-Rioki's Corner
+colenso.org
 ==============
 
-This is the source of [Rioki's Personal website][1].
+This is the source of [colenso.org][1].
 
-You are free to look at how I solved some twists with [jekyll]. The content 
-and design is mine and may only be reproduced with permission.
-
-[1]: http://www.rioki.org
-[jekyll]: https://github.com/mojombo/jekyll
+[1]: http://www.colenso.org

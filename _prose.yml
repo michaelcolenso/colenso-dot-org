@@ -1,6 +1,6 @@
 prose:
   rooturl: 'content'
-  siteurl: 'http://www.rioki.org'
+  siteurl: 'http://www.colenso.org'
   media: 'content/media'
   metadata:
     content/posts:      
@@ -19,10 +19,10 @@ prose:
           options:
             - name: "Meta"
               value: "meta"
-            - name: "C++"
-              value: "cpp"
-            - name: "openGL"
-              value: "opengl"
-            - name: "Web"
+            - name: "awesome"
+              value: "awesome"
+            - name: "work"
+              value: "work"
+            - name: "web"
               value: "web"
          

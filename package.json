@@ -1,17 +1,17 @@
 {
-  "name": "www.rioki.org",
+  "name": "colenso.org",
   "version": "0.0.0",
-  "description": "Rioki's personal website.",
+  "description": "my friend colenso",
   "repository": {
     "type": "git",
-    "url": "https://rioki@github.com/rioki/www.rioki.org.git"
+    "url": "https://michaelcolenso@github.com/michaelcolenso/blog-the-words.git"
   },
   "keywords": [
     "web"
   ],
-  "author": "Sean \"Rioki\" Farrell",
-  "license": "Copyright 2014 Sean Farrell",
-  "homepage": "http://www.rioki.org",
+  "author": "michaelcolenso",
+  "license": "Copyright 2014 Michael Colenso",
+  "homepage": "http://www.colenso.org",
   "devDependencies": {
     "gulp": "^3.7.0",
     "gulp-marked": "^0.2.0",
