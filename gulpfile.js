@@ -234,7 +234,7 @@ gulp.task('posts', function () {
                 var year = match[1];            
                 var month = match[2];
                 var day = match[3];
-            
+
                 path.dirname = year + '/' + month + '/' + day;
                 path.basename = match[4];
             }            
@@ -271,7 +271,6 @@ function tags() {
 		this.push(file);
 		cb();
 	});
-    
   if (site.tags)
   {
     site.tags.forEach(function (tag) {
@@ -280,14 +279,11 @@ function tags() {
         contents: new Buffer('')
       });
       file.page = {title: tag, tag: tag}
-            
-      stream.write(file);        
+      stream.write(file);
     });
   }
-  
   stream.end();
   stream.emit("end");
-  
   return stream;
 }
 
@@ -302,6 +298,8 @@ gulp.task('rss', ['posts'], function () {
     .pipe(applyTemplate('templates/atom.xml'))
     .pipe(gulp.dest('build/'));
 });
+
+gulp.task('test', ['default']);
 
 gulp.task('serve', function() {
   gulp.src('build/')
