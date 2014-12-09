@@ -16,6 +16,7 @@ var gutil       = require('gulp-util');
 var path        = require('path');
 var swig        = require('swig');
 var through     = require('through2');
+var rev = require('gulp-rev');
 
 var site  = require('./site.json');
 site.time = new Date();
@@ -98,7 +99,7 @@ function applyTemplate(templateFile) {
 
 
 gulp.task('css', function() {
-  gulp.src('assets/css/base.css')
+  return gulp.src('assets/css/base.css')
     .pipe(basswork())
     .pipe(minifyCss())
     .pipe(rename({ extname: '.min.css' }))
@@ -106,7 +107,7 @@ gulp.task('css', function() {
 });
 
 gulp.task('js', function() {
-  gulp.src('assets/js/app.js')
+  return gulp.src('assets/js/app.js')
     .pipe(browserify())
     .pipe(uglify())
     .pipe(rename({ extname: '.min.js' }))
@@ -114,7 +115,7 @@ gulp.task('js', function() {
 });
 
 gulp.task('assets', function () {
-    return gulp.src('assets/**/*')        
+    return gulp.src('assets/**/*') 
         .pipe(gulp.dest('build/'));
 });
 
@@ -306,12 +307,17 @@ gulp.task('clean', function() {
         .pipe(clean());
 });
 
+gulp.task('rev', function () {
+    return gulp.src('build/css/*.css')
+        .pipe(rev())
+        .pipe(gulp.dest('build/css'));
+});
 
 gulp.task('serve', function() {
   gulp.src('build/')
     .pipe(webserver({}));
 });
 
-gulp.task('default', ['css', 'js', 'pages', 'media', 'posts', 'index', 'archive', 'tags', 'rss', 'serve'], function() {
+gulp.task('default', ['css', 'js', 'assets', 'pages', 'media', 'posts', 'index', 'archive', 'tags', 'rss','rev', 'serve'], function() {
   gulp.watch(['./assets/**/*'], ['css', 'js']);
 });

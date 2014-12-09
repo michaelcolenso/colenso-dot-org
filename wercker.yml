@@ -4,14 +4,14 @@ build:
     - wercker/npm-install@0.9.3
 deploy:
   steps:
+    - dlapiduz/cf-invalidate:
+        key-id: $KEY
+        key-secret: $SECRET
+        distribution-id: $CF_DIST
+        path: /*
     - wercker/s3sync@1.2.0:
         key_id: $KEY
         key_secret: $SECRET
         bucket_url: $BUCKET
         source_dir: build
 
-    - dlapiduz/cf-invalidate:
-        key-id: $KEY
-        key-secret: $SECRET
-        distribution-id: $CF_DIST
-        path: /*

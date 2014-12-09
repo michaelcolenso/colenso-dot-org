@@ -12,7 +12,6 @@
   "author": "michaelcolenso",
   "license": "Copyright 2014 Michael Colenso",
   "homepage": "http://www.colenso.org",
-
   "dependencies": {
     "basscss-base": "latest",
     "basscss-color-basic": "latest",
@@ -23,18 +22,20 @@
     "basscss-utilities": "latest"
   },
   "devDependencies": {
-    "gulp-webserver": "^0.8.7",
     "gulp": "^3.7.0",
     "gulp-basswork": "0.0.9",
     "gulp-browserify": "^0.5.0",
+    "gulp-buster": "^1.0.0",
     "gulp-clean": "^0.3.0",
     "gulp-front-matter": "^1.0.0",
     "gulp-marked": "^0.2.0",
     "gulp-minify-css": "^0.3.11",
     "gulp-minify-html": "^0.1.3",
     "gulp-rename": "^1.2.0",
+    "gulp-rev": "^2.0.1",
     "gulp-uglify": "^1.0.2",
     "gulp-util": "^2.2.16",
+    "gulp-webserver": "^0.8.7",
     "swig": "^1.3.2",
     "through2": "^0.5.1"
   },
