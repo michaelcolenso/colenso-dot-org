@@ -9,7 +9,7 @@ deploy:
         key-secret: $SECRET
         distribution-id: $CF_DIST
         path: /*
-    - schickling/s3-website@0.2.6:
-        key: $KEY
-        secret: $SECRET
-        bucket: $BUCKET
+    - s3sync:
+            key-id: $KEY
+            key-secret: $SECRET
+            bucket-url: $BUCKET
