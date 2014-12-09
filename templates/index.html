@@ -2,7 +2,6 @@
 {% set page.nav = "home" %}
 {% extends 'default.html' %}
 {% block content %}
-
 <article>
 
 {% for post in site.posts %}
@@ -14,6 +13,11 @@
       {% endfor %}
     </p>
     <p class="">{{ post.date|date('Y-m-d') }}</p>
+<article>
+{% for post in site.posts %}
+  {% if loop.index < 4 %}
+    <h2>{{post.title}}</h2>
+    <p class="text-muted">{{ post.date|date('Y-m-d') }}</p>
     <p>
         {{ post.summary|safe }}        
     </p>    

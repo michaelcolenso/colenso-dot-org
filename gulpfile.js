@@ -8,6 +8,8 @@ var webserver = require('gulp-webserver');
 var frontMatter = require('gulp-front-matter');
 var marked      = require('gulp-marked');
 var minifyHtml  = require('gulp-minify-html');
+var basswork = require('gulp-basswork');
+var minifyCss = require('gulp-minify-css');
 var rename      = require('gulp-rename');
 var clean       = require('gulp-clean');
 var gutil       = require('gulp-util');
@@ -93,6 +95,28 @@ function applyTemplate(templateFile) {
         cb();
     });
 }
+
+
+gulp.task('css', function() {
+  gulp.src('assets/css/base.css')
+    .pipe(basswork())
+    .pipe(minifyCss())
+    .pipe(rename({ extname: '.min.css' }))
+    .pipe(gulp.dest('build/css'));
+});
+
+gulp.task('js', function() {
+  gulp.src('assets/js/app.js')
+    .pipe(browserify())
+    .pipe(uglify())
+    .pipe(rename({ extname: '.min.js' }))
+    .pipe(gulp.dest('build/js'));
+});
+
+gulp.task('assets', function () {
+    return gulp.src('assets/**/*')        
+        .pipe(gulp.dest('build/'));
+});
 
 gulp.task('media', function () {
     return gulp.src('content/media/**/*')        
