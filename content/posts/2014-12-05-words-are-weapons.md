@@ -1,6 +1,6 @@
 ---
 published: true
-title: boom. roasted.
+title: words are weapons
 tags: 
   - meta
   - web
@@ -8,7 +8,6 @@ tags:
 
 Here are some fancy words.
 
-### here's a thought. maybe something original.
 <!--more-->
 
-bunch more words and shit bro
+bunch more words. so meaningful.

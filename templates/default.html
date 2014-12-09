@@ -5,32 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }} - {{ site.title }}</title>
     <meta name="author" content="{{ site.author }}" />
-    <link href="/css/bootstrap.min.css" rel="stylesheet">    
-    <link href="/css/slimbox2.css" rel="stylesheet">    
-    <link href="/css/colenso.css" rel="stylesheet">    
-    <link rel="alternate" type="application/atom+xml" title="Rioki's Corner Feed" href="/atom.xml" />               
+    <link rel="stylesheet" href="css/base.min.css">
+    <link rel="alternate" type="application/atom+xml" title="colensofeed" href="/atom.xml" />               
   </head>
+  
   <body> 
     <div class="container">
       <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li {% if page.nav == "home"%}class="active"{% endif%}>
-            <a href="/">Home</a>
-          </li>
-          <li {% if page.nav == "journal"%}class="active"{% endif%}>
-            <a href="/journal.html">Journal</a>
-          </li>
-          <li {% if page.nav == "projects"%}class="active"{% endif%}>
-            <a href="/projects.html">Projects</a>
-          </li>
-          <li {% if page.nav == "about"%}class="active"{% endif%}>
-            <a href="/about.html">About</a>
-          </li>
-        </ul>
-        <h3 class="text-muted">{{ site.title }}</h3>
+        <div class="sm-table table-fixed center nowrap">
+          
+          <div class="sm-table-cell">
+            <a href="/" class="button button-narrow button-nav-light">{{ page.title }}</a>
+          </div>
+  
+          
+          <div class="sm-table-cell">
+            <a href="/journal.html" class="button button-narrow button-nav-light">blog</a>
+          </div>
+          
+          <div class="sm-table-cell">
+            <a href="/projects.html" class="button button-narrow button-nav-light">projects</a>
+          </div>
+          
+          <div class="sm-table-cell">
+            <a href="/about.html" class="button button-narrow button-nav-light">about</a>
+          </div>
+        </div>
       </div>
       {% block content %}{% endblock %}
-      <div class="footer clearfix">
+      <div class="clearfix">
         <p>
           &copy; 2014 michaelcolenso |
           <a href="/imprint.html">disclaimer</a> |
@@ -39,31 +42,8 @@
       </div>
     </div>   
     
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/slimbox2.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript">
-      $(function() {
-        $('img.img-responsive').each(function () {
-          var img = $(this);
-          var src = img.attr('src');
-          img.wrap('<a href="'+ src +'" class="slimbox"></a>');
-        });
-        $('a.slimbox').slimbox();
-      });
-    </script>    
-    <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-3244789-10']);
-      _gaq.push(['_trackPageview']);
+    <script src="js/app.min.js"></script>
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    </script>    
     
   </body>
 </html>

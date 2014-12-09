@@ -5,8 +5,8 @@ build:
     - yeehaa/gulp@0.0.4
 deploy:
   steps:
-    - s3sync:
-        key_id: $KEY
-        key_secret: $SECRET
-        bucket_url: $URL
-        source_dir: build
+    - wercker/s3sync@1.2.0:
+        key-id: $KEY
+        key-secret: $SECRET
+        bucket-url: $BUCKET
+        source-dir: build

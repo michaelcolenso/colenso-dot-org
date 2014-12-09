@@ -3,6 +3,8 @@ var gulp        = require('gulp');
 var frontMatter = require('gulp-front-matter');
 var marked      = require('gulp-marked');
 var minifyHtml  = require('gulp-minify-html');
+var basswork = require('gulp-basswork');
+var minifyCss = require('gulp-minify-css');
 var rename      = require('gulp-rename');
 var clean       = require('gulp-clean');
 var gutil       = require('gulp-util');
@@ -11,6 +13,9 @@ var swig        = require('swig');
 var through     = require('through2');
 var connect     = require('connect');
 var http        = require('http');
+var browserify = require('gulp-browserify');
+var uglify = require('gulp-uglify');
+
 
 var site  = require('./site.json');
 site.time = new Date();
@@ -92,6 +97,23 @@ function applyTemplate(templateFile) {
         cb();
     });
 }
+
+
+gulp.task('css', function() {
+  gulp.src('assets/css/base.css')
+    .pipe(basswork())
+    .pipe(minifyCss())
+    .pipe(rename({ extname: '.min.css' }))
+    .pipe(gulp.dest('build/css'));
+});
+
+gulp.task('js', function() {
+  gulp.src('assets/js/app.js')
+    .pipe(browserify())
+    .pipe(uglify())
+    .pipe(rename({ extname: '.min.js' }))
+    .pipe(gulp.dest('build/js'));
+});
 
 gulp.task('assets', function () {
     return gulp.src('assets/**/*')        
@@ -260,7 +282,7 @@ gulp.task('rss', ['posts'], function () {
     .pipe(gulp.dest('build/'));
 });
 
-gulp.task('default', ['assets', 'pages', 'media', 'posts', 'index', 'archive', 'tags', 'rss']);
+gulp.task('default', ['css', 'js', 'assets', 'pages', 'media', 'posts', 'index', 'archive', 'tags', 'rss']);
 
 // quickfix for yeehaa's gulp step (TODO build a sane gulp step)
 gulp.task('test', ['default']);
@@ -271,6 +293,8 @@ gulp.task('clean', function() {
 });
 
 gulp.task('watch', ['default'], function () {
+  gulp.watch(['assets/css/**/*'], ['css']);
+  gulp.watch(['assets/js/*'], ['js']);
   gulp.watch(['assets/**/*'], ['assets']);
   gulp.watch(['content/media'], ['media'])
   gulp.watch(['templates/page.html','content/pages/*.md'], ['pages']);
