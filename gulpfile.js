@@ -301,6 +301,12 @@ gulp.task('rss', ['posts'], function () {
 
 gulp.task('test', ['default']);
 
+gulp.task('clean', function() {
+    return gulp.src('build', {read: false})
+        .pipe(clean());
+});
+
+
 gulp.task('serve', function() {
   gulp.src('build/')
     .pipe(webserver({}));
