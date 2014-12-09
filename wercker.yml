@@ -9,3 +9,9 @@ deploy:
         key_secret: $SECRET
         bucket_url: $BUCKET
         source_dir: build
+
+    - dlapiduz/cf-invalidate:
+        key-id: $KEY
+        key-secret: $SECRET
+        distribution-id: $CF_DIST
+        path: /*
