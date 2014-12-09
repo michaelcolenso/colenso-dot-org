@@ -36,6 +36,8 @@
     "through2": "^0.5.1"
   },
   "dependencies": {
-    "basscss": "^4.1.4"
+    "basscss": "^4.1.4",
+    "gulpsmith": "^0.5.2",
+    "metalsmith": "^1.0.1"
   }
 }
