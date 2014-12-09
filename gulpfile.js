@@ -1,5 +1,10 @@
-
-var gulp        = require('gulp');
+var gulp = require('gulp');
+var rename = require('gulp-rename');
+var basswork = require('gulp-basswork');
+var minifyCss = require('gulp-minify-css');
+var browserify = require('gulp-browserify');
+var uglify = require('gulp-uglify');
+var webserver = require('gulp-webserver');
 var frontMatter = require('gulp-front-matter');
 var marked      = require('gulp-marked');
 var minifyHtml  = require('gulp-minify-html');
@@ -9,8 +14,6 @@ var gutil       = require('gulp-util');
 var path        = require('path');
 var swig        = require('swig');
 var through     = require('through2');
-var connect     = require('connect');
-var http        = require('http');
 
 var site  = require('./site.json');
 site.time = new Date();
@@ -63,14 +66,13 @@ function filename2date() {
             file.page.date = new Date(year + "-" + month + "-" + day);
             file.page.url  = '/' + year + '/' + month + '/' + day + '/' + basename + '.html';
         }
-        
         this.push(file);
         cb();
     });
 }
 
 function summarize(marker) {
-    return through.obj(function (file, enc, cb) {                
+    return through.obj(function (file, enc, cb) {
         var summary = file.contents.toString().split(marker)[0]
         file.page.summary = summary;
         this.push(file);
@@ -80,23 +82,17 @@ function summarize(marker) {
 
 function applyTemplate(templateFile) {
     var tpl = swig.compileFile(path.join(__dirname, templateFile));
-    
-    return through.obj(function (file, enc, cb) {            
+    return through.obj(function (file, enc, cb) {
         var data = {
             site: site,
             page: file.page,
             content: file.contents.toString()
-        };            
+        };
         file.contents = new Buffer(tpl(data), 'utf8');
         this.push(file);
         cb();
     });
 }
-
-gulp.task('assets', function () {
-    return gulp.src('assets/**/*')        
-        .pipe(gulp.dest('build/'));
-});
 
 gulp.task('media', function () {
     return gulp.src('content/media/**/*')        
@@ -109,30 +105,6 @@ gulp.task('pages', function () {
         .pipe(marked())
         .pipe(applyTemplate('templates/page.html'))
         .pipe(rename({extname: '.html'}))
-        .pipe(gulp.dest('build'));
-});
-
-gulp.task('posts', function () {
-    return gulp.src('content/posts/*.md')
-        .pipe(frontMatter({property: 'page', remove: true}))        
-        .pipe(marked())
-        .pipe(summarize('<!--more-->'))
-        .pipe(filename2date())
-        .pipe(collectPosts())
-        .pipe(applyTemplate('templates/post.html'))
-        .pipe(rename(function (path) {
-            path.extname = ".html";
-            var match = rePostName.exec(path.basename);
-            if (match)
-            {
-                var year = match[1];            
-                var month = match[2];
-                var day = match[3];
-            
-                path.dirname = year + '/' + month + '/' + day;
-                path.basename = match[4];
-            }            
-        }))
         .pipe(gulp.dest('build'));
 });
 
@@ -157,13 +129,6 @@ function dummy(file) {
   
   return stream;
 }
-
-gulp.task('index', ['posts'], function () {
-    return dummy('index.html')
-        .pipe(applyTemplate('templates/index.html'))
-        .pipe(gulp.dest('build/'));
-});
-
 function posts(basename, count) {
   var stream = through.obj(function(file, enc, cb) {
 		this.push(file);
@@ -223,6 +188,60 @@ gulp.task('archive', ['posts'], function () {
         .pipe(gulp.dest('build/'));
 });
 
+gulp.task('index', ['posts'], function () {
+    return dummy('index.html')
+        .pipe(applyTemplate('templates/index.html'))
+        .pipe(gulp.dest('build/'));
+});
+
+gulp.task('posts', function () {
+    return gulp.src('content/posts/*.md')
+        .pipe(frontMatter({property: 'page', remove: true}))        
+        .pipe(marked())
+        .pipe(summarize('<!--more-->'))
+        .pipe(filename2date())
+        .pipe(collectPosts())
+        .pipe(applyTemplate('templates/post.html'))
+        .pipe(rename(function (path) {
+            path.extname = ".html";
+            var match = rePostName.exec(path.basename);
+            if (match)
+            {
+                var year = match[1];            
+                var month = match[2];
+                var day = match[3];
+            
+                path.dirname = year + '/' + month + '/' + day;
+                path.basename = match[4];
+            }            
+        }))
+        .pipe(gulp.dest('build'));
+});
+
+
+
+gulp.task('css', function() {
+  gulp.src('./assets/css/base.css')
+    .pipe(basswork())
+    .pipe(minifyCss())
+    .pipe(rename({ extname: '.min.css' }))
+    .pipe(gulp.dest('build/css'));
+});
+
+gulp.task('js', function() {
+  gulp.src('./assets/js/app.js')
+    .pipe(browserify())
+    .pipe(uglify())
+    .pipe(rename({ extname: '.min.js' }))
+    .pipe(gulp.dest('build/js'));
+});
+
+gulp.task('archive', ['posts'], function () {
+    return posts('journal', 10)
+        .pipe(applyTemplate('templates/journal.html'))
+        .pipe(gulp.dest('build/'));
+});
+
 function tags() {    
   var stream = through.obj(function(file, enc, cb) {
 		this.push(file);
@@ -260,25 +279,11 @@ gulp.task('rss', ['posts'], function () {
     .pipe(gulp.dest('build/'));
 });
 
-gulp.task('default', ['assets', 'pages', 'media', 'posts', 'index', 'archive', 'tags', 'rss']);
-
-// quickfix for yeehaa's gulp step (TODO build a sane gulp step)
-gulp.task('test', ['default']);
-
-gulp.task('clean', function() {
-  return gulp.src('build', {read: false})
-    .pipe(clean());
+gulp.task('serve', function() {
+  gulp.src('build/')
+    .pipe(webserver({}));
 });
 
-gulp.task('watch', ['default'], function () {
-  gulp.watch(['assets/**/*'], ['assets']);
-  gulp.watch(['content/media'], ['media'])
-  gulp.watch(['templates/page.html','content/pages/*.md'], ['pages']);
-  gulp.watch(['templates/post.html', 'templates/index.html', 'templates/journal.html','content/posts/*.md'], ['posts', 'index', 'archive', 'tags', 'rss']);
-  
-  var app = connect()
-    .use(connect.static('build'))
-    .use(connect.directory('build'));
-  
-  http.createServer(app).listen(3000);
+gulp.task('default', ['css', 'js', 'pages', 'media', 'posts', 'index', 'archive', 'tags', 'rss', 'serve'], function() {
+  gulp.watch(['./assets/**/*'], ['css', 'js']);
 });

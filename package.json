@@ -4,7 +4,7 @@
   "description": "mike fucking colenso",
   "repository": {
     "type": "git",
-    "url": "https://michaelcolenso@github.com/michaelcolenso/blog-the-words.git"
+    "url": "https://michaelcolenso@github.com/michaelcolenso/colenso-dot-org.git"
   },
   "keywords": [
     "web"
@@ -12,16 +12,33 @@
   "author": "michaelcolenso",
   "license": "Copyright 2014 Michael Colenso",
   "homepage": "http://www.colenso.org",
+
+  "dependencies": {
+    "basscss-base": "latest",
+    "basscss-color-basic": "latest",
+    "basscss-grid": "latest",
+    "basscss-positions": "latest",
+    "basscss-table-object": "latest",
+    "basscss-ui-utilities": "latest",
+    "basscss-utilities": "latest"
+  },
   "devDependencies": {
+    "gulp-webserver": "^0.8.7",
     "gulp": "^3.7.0",
-    "gulp-marked": "^0.2.0",
+    "gulp-basswork": "0.0.9",
+    "gulp-browserify": "^0.5.0",
     "gulp-clean": "^0.3.0",
-    "gulp-minify-html": "^0.1.3",
     "gulp-front-matter": "^1.0.0",
-    "connect": "^2.19.3",
+    "gulp-marked": "^0.2.0",
+    "gulp-minify-css": "^0.3.11",
+    "gulp-minify-html": "^0.1.3",
     "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^1.0.2",
+    "gulp-util": "^2.2.16",
     "swig": "^1.3.2",
-    "through2": "^0.5.1",
-    "gulp-util": "^2.2.16"
+    "through2": "^0.5.1"
+  },
+  "scripts": {
+    "start": "gulp"
   }
 }
