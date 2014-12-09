@@ -2,7 +2,6 @@ box: wercker/nodejs@1.0.2
 build:
   steps:
     - wercker/npm-install@0.9.3
-    - yeehaa/gulp@0.0.4
 deploy:
   steps:
     - wercker/s3sync@1.2.0:
